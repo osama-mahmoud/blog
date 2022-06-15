@@ -4,14 +4,16 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="home-account">
-                        <a href="#">Home</a>
-                        <a href="#">My account</a>
+                        <a href="#" data-toggle="modal" data-target="#Register">Register</a>
+                        <a href="#" data-toggle="modal" data-target="#Login">Login</a>
+                        <login></login>
+                        <register></register>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="cart-info">
-                        <i class="fa fa-shopping-cart"></i>
-                        (<a href="#">5 items</a>) in your cart (<a href="#">$45.80</a>)
+                        <i class="fa fa-phone"></i>010-020-0340
+                        <i class="fa fa-envelope"></i>info@company.com
                     </div>
                 </div>
             </div>
@@ -29,19 +31,13 @@
                     <div class="main-menu">
                         <ul>
                             <li><router-link :to="'/'">Home</router-link></li>
-                            <li><a href="about-us.html">About</a></li>
-                            <li><a href="products.html">Products</a></li>
-                            <li><a href="contact-us.html">Contact</a></li>
+                            <li><router-link :to="'/posts'">Posts</router-link></li>
+                            <li><router-link :to="'/categories'">Categories</router-link></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="search-box">
-                        <form name="search_form" method="get" class="search_form">
-                            <input id="search" type="text" />
-                            <input type="submit" id="search-button" />
-                        </form>
-                    </div>
+                   <search-posts></search-posts>
                 </div>
             </div>
         </div>

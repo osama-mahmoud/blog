@@ -62,7 +62,7 @@
                                             </div>
                                             <div class="leave-form">
                                                 <form action="#" method="post" class="leave-comment">
-                                                    <input type="hidden" name="" v-model="post_id"></input>
+                                                    <input type="hidden" name="" v-model="post_id">
                                                     <!-- <div class="row">
                                                     <div class="name col-md-4">
                                                         <input type="text" name="name" id="name" placeholder="Name" />
@@ -143,6 +143,10 @@ export default {
      this.getPost();
    //  this.updateToken();
    },
+   mounted(){
+      //  console.log('mounted');
+        this.getPost();
+       },
    methods:{
      getPost(){
       axios.get('/api/posts/'+this.$route.params.slug)

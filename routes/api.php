@@ -18,5 +18,16 @@ use App\Http\Controllers\PostController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('posts/allposts', 'PostController@allposts');
 Route::apiResource('posts','PostController');
 Route::post('comment/create', 'CommentController@store');
+Route::get('categories/allcategories', 'CategoryController@index');
+Route::get('categories/{slug}', 'CategoryController@categoryposts');
+Route::get('searchposts/{query}','PostController@searchposts');
+Route::post('login', 'UserController@login');
+Route::post('register', 'UserController@register');
+Route::middleware('auth:api')->group(function () {
+    Route::get('user', 'UserController@details');
+  //  Route::post('comment/create', 'CommentController@store');
+
+});

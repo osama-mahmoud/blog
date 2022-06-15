@@ -106,4 +106,16 @@ class PostController extends Controller
     {
         //
     }
+
+    public function searchposts($query){
+        $posts = Post::where('title','like','%'.$query.'%')->get();
+        return response()->json($posts);
+    }
+
+    public function allposts()
+    {
+        $posts = Post::latest()->paginate(2);
+        return response()->json($posts);
+
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
@@ -15,7 +16,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $category =  Category::latest()->get();
+       // dd($category);
+        return response()->json($category);
+
     }
 
     /**
@@ -45,9 +49,9 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show()
     {
-        //
+
     }
 
     /**
@@ -82,5 +86,13 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+    }
+
+    public function categoryposts($slug){
+    $categoryPosts = Category::with('posts')->where('slug', '=', $slug)->get();
+    foreach ($categoryPosts as $post) {
+       $categoryPosts = $post->posts;
+    }
+    return response()->json($categoryPosts);
     }
 }

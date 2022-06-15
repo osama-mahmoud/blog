@@ -4,13 +4,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="heading-section">
-                                <h2>Latest blog posts</h2>
+                                <h2>Posts</h2>
                                 <img src="images/under-heading.png" alt="" >
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 col-sm-6" v-for="post in posts" :key="post.id">
+                        <div class="col-md-4 col-sm-6" v-for="post in posts.data" :key="post.id">
                             <div class="blog-post">
                                 <div class="blog-thumb">
                                     <img src="images/blogpost1.jpg" alt="" />
@@ -27,6 +27,7 @@
                             </div>
                         </div>
                     </div>
+                    <pagination :data="posts" @pagination-change-page="getPosts"></pagination>
                 </div>
             </div>
 </template>
@@ -34,7 +35,7 @@
     export default {
        data(){
         return{
-            posts:[]
+            posts:{}
         }
        },
        mounted(){
@@ -42,8 +43,8 @@
         this.getPosts();
        },
        methods:{
-        getPosts(){
-            axios.get('/api/posts')
+        getPosts(page = 1){
+            axios.get('/api/posts/allposts?page=' + page)
             .then(res => {
              this.posts = res.data;
             })

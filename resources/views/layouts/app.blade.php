@@ -30,9 +30,10 @@ http://www.templatemo.com/free-website-templates/417-grill
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
     <div id="app">
+        <global-home></global-home>
           {{-- @include('layouts.header') --}}
-            @yield('content')
-          @include('layouts.footer')
+            {{-- @yield('content') --}}
+          {{-- @include('layouts.footer') --}}
     </div>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('website/js/vendor/jquery-1.11.0.min.js') }}"></script>

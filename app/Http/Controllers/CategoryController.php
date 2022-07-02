@@ -6,14 +6,13 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // public function __construct(){
+    //     $this->middleware('admin');
+    // }
     public function index()
     {
         $category =  Category::latest()->get();
@@ -22,70 +21,38 @@ class CategoryController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function addCategory(Request $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreCategoryRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreCategoryRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required',
+            ]);
+       $category = Category::create([
+           'name'=>$request->name,
+           'slug'=>$request->slug,
+       ]);
+       return response()->json($category);
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
+    public function updateCategory(Request $request)
     {
-        //
+        $category = Category::find($request->id);
+        $category->name = $request->name;
+        $category->slug =  $request->slug;
+        $category->save();
+        return response()->json($category);
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateCategoryRequest  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function deleteCategory(Request $request)
     {
-        //
-    }
+          $id = $request->category_ids;
+          $category =  Category::find($id);
+          $category -> posts() -> delete();
+          $category -> delete();
+          return response()->json(['message'=>'deleted']);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category)
-    {
-        //
     }
 
     public function categoryposts($slug){

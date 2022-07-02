@@ -10,18 +10,18 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 col-sm-6" v-for="post in posts" :key="post.id">
+                        <div class="col-md-4 col-sm-6" v-for="categoryPost in categoryPosts" :key="categoryPost.id">
                             <div class="blog-post">
                                 <div class="blog-thumb">
-                                    <img src="images/blogpost1.jpg" alt="" />
+                                    <img :src="'/image/'+categoryPost.image" alt="">
                                 </div>
                                 <div class="blog-content">
                                     <div class="content-show">
-                                        <h4><router-link :to="'/post/'+post.slug">{{ post.slug  }}</router-link></h4>
-                                        <span>{{ post.created_at }}</span>
+                                        <h4><router-link :to="'/post/'+categoryPost.slug">{{ categoryPost.title  }}</router-link></h4>
+                                        <span>{{ categoryPost.created_at }}</span>
                                     </div>
                                     <div class="content-hide">
-                                        <p>{{ post.body  }}</p>
+                                        <p>{{ categoryPost.body  }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -34,19 +34,21 @@
     export default {
        data(){
         return{
-            posts:[]
+            categoryPosts:[]
         }
        },
        mounted(){
         console.log('mounted');
-        this.getPosts();
+        this.getCategories();
        },
        methods:{
-        getPosts(){
-            axios.get('/api/posts')
-            .then(res => {
-             this.posts = res.data;
-            })
+        getCategories(){
+            axios.get('/api/categories/'+this.$route.params.slug)
+            .then(res =>
+            {
+             this.categoryPosts = res.data;console.log(res);
+            }
+            )
             .then(err => console.log(err))
         }
        }

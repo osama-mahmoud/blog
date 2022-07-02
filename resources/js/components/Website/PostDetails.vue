@@ -17,7 +17,7 @@
                                         <div class="col-md-8">
                                                 <div class="image">
                                                     <div class="image-post">
-                                                        <img :src="'/images/'+post.image" alt="">
+                                                        <img :src="'/image/'+post.image" alt="">
                                                     </div>
                                                 </div>
                                                 <div class="product-content">
@@ -34,7 +34,7 @@
                                                 </div>
                                                 <div class="comments-title">
                                                     <div class="comment-section">
-                                                        <h4>{{post.comments_count}} comments</h4>
+                                                        <h4>{{totalComent}} comments</h4>
                                                     </div>
                                                 </div>
                                                 <div class="all-comments">
@@ -55,11 +55,14 @@
                                                 <div class="divide-line">
                                                 <img src="images/div-line.png" alt="" />
                                                 </div>
+                                            <div v-if="isLogged">
                                             <div class="leave-comment">
                                                 <div class="leave-one">
                                                     <h4>Leave a comment</h4>
                                                 </div>
                                             </div>
+
+
                                             <div class="leave-form">
                                                 <form action="#" method="post" class="leave-comment">
                                                     <input type="hidden" name="" v-model="post_id">
@@ -85,7 +88,19 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-md-offset-1">
+
+                                            <div v-else class="leave-comment">
+                                                <div class="leave-one">
+                                                    <h4>Please Login to comment</h4>
+                                                </div>
+                                            </div>
+                        <a class="btn btn-primary" v-if="!isLogged" href="#" data-toggle="modal" data-target="#Register">Register</a>
+                        <a class="btn btn-primary" v-if="!isLogged" href="#" data-toggle="modal" data-target="#Login">Login</a>
+                        <login></login>
+                        <register></register>
+
+                                        </div>
+                                        <!-- <div class="col-md-3 col-md-offset-1">
                                             <div class="side-bar">
                                                 <div class="recent-post">
                                                     <h4>Recent Posts</h4>
@@ -120,7 +135,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +151,9 @@ export default {
        post:'',
        body:'',
        post_id : '',
-       comments:[]
+       comments:[],
+       user_id:'',
+       totalComent: ''
      }
    },
    created(){
@@ -144,7 +161,7 @@ export default {
    //  this.updateToken();
    },
    mounted(){
-      //  console.log('mounted');
+      //  console.log(this.$store.state.user);
         this.getPost();
        },
    methods:{
@@ -155,6 +172,7 @@ export default {
         this.post = res.data
         this.post_id = this.post.id;
         this.comments = this.post.comments
+        this.totalComent = this.post.comments_count
       })
       .catch(err =>{
         console.log(err)
@@ -162,13 +180,22 @@ export default {
      },
      addComment(){
        let {body,post_id} = this;
-       axios.post('/api/comment/create',{body,post_id})
+       axios.post('/api/comments',{body,post_id})
        .then(res => {
          console.log(res)
          this.comments.unshift(res.data)
+         this.totalComent ++
        })
      },
+     updateToken(){
+       let token =JSON.parse(localStorage.getItem('userToken'));
+       this.$store.commit('setUserToken',token)
+     }
 },
-
+computed:{
+     isLogged(){
+       return this.$store.getters.isLogged;
+     }
+   }
 }
 </script>

@@ -19,10 +19,11 @@
                                               <label for="exampleInputEmail1" style="color: black">Email address</label>
                                               <input type="email" class="form-control" placeholder="Enter email" style="margin-top: 1px;" v-model="email">
                                               <span class="text-danger" v-show="EmailError">Email not valid</span>
+                                              <span class="text-danger" id="EmailErr" v-if="this.$store.state.emailerr">{{this.$store.state.emailerr.data.errors.email[0]}}</span>
                                             </div>
                                             <div class="form-group">
                                               <label for="exampleInputPassword1" style="color: black">Password</label>
-                                              <input type="password" class="form-control" placeholder="Password" style="margin-top: 1px;" v-model="password">
+                                              <input type="password" class="form-control Password" placeholder="Password" style="margin-top: 1px;" v-model="password" autocomplete="new-password">
                                               <span class="text-danger" v-show="PasswordError">Password to short</span>
                                             </div>
                                             <button @click.prevent="submitRegister" :disabled="!isValidForm" type="submit" class="btn btn-default">Submit</button>
@@ -42,33 +43,32 @@ export default {
             name:'',
             email:'',
             password:'',
+            is_admin:0,
         }
        },
        computed:{
          NameError(){
-             return this.name.length > 0 && this.name.length < 4
+             return this.name.length > 0 && this.name.length < 3
          },
          EmailError(){
            return !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) && this.email.length > 0
          },
          PasswordError(){
-             return this.password.length > 0 && this.password.length < 7
+             return this.password.length > 1 && this.password.length < 6
          },
          isValidForm(){
-             return this.name.length > 4   &&
-             this.password.length > 5 && (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email))
+             return  (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email))
          }
      },
      methods:{
        submitRegister(){
-           //console.log('submitted');
-           //client sid  localstorage sessionstorage indexed db   state managment system
-           //vue vuex
-           //this.$store.state.userToken = "amine"
-           //this.$store.commit('setUserToken',{userToken:'sdmfjsdkfjlsds'})
-            //console.log(this.$store.getters.isLogged)
-            let  {name,email,password} = this;
-            this.$store.dispatch('RegisterUser',{name,email,password})
+            let  {name,email,password,is_admin} = this;
+            this.$store.dispatch('RegisterUser',{name,email,password,is_admin})
+       },
+       ClearInput(){
+            this.name='',
+            $(".Password").val(),
+            this.password=''
        }
      }
 }

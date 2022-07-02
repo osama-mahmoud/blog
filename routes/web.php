@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Middleware\IsAdmin;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,15 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/adminpanel', function () {
-    return view('admin.home');
-});
-// Route::get('/', function () {
-//     return view('welcome');
+// Route::get('/adminpanel', function () {
+//     return view('admin.layouts.app');
 // });
-Route::get('{any}', function () {
-    return view('welcome');
+
+// Route::get('/', function () {
+//     return view('layouts.app');
+// });
+Route::get('adminpanel/{any?}', function () {
+        return view('admin.layouts.app');
 })->where('any', '.*');
+
+    Route::get('{any}', function () {
+        return view('layouts.app');
+    })->where('any', '.*');
+
+
+
+// ->middleware(['admin'])
 
 // Auth::routes();
 

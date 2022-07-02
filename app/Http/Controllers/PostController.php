@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -18,7 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->get();
+        $posts = Post::latest()->get()->take(6);
         return response()->json($posts);
 
     }
@@ -108,13 +109,15 @@ class PostController extends Controller
     }
 
     public function searchposts($query){
-        $posts = Post::where('title','like','%'.$query.'%')->get();
+        $posts = Post::where('title','like','%'.$query.'%')->paginate(2);//dd($posts);
+       // $nbposts = count($posts->get());
+      //  $posts = $posts->paginate(intval($nbposts));
         return response()->json($posts);
     }
 
     public function allposts()
     {
-        $posts = Post::latest()->paginate(2);
+        $posts = Post::latest()->paginate(6);
         return response()->json($posts);
 
     }

@@ -13,7 +13,7 @@
                         <div class="col-md-4 col-sm-6" v-for="post in posts.data" :key="post.id">
                             <div class="blog-post">
                                 <div class="blog-thumb">
-                                    <img src="images/blogpost1.jpg" alt="" />
+                                    <img :src="'/image/'+post.image" alt="">
                                 </div>
                                 <div class="blog-content">
                                     <div class="content-show">
@@ -39,7 +39,7 @@
         }
        },
        mounted(){
-        console.log('mounted');
+        console.log(this.getPosts());
         this.getPosts();
        },
        methods:{

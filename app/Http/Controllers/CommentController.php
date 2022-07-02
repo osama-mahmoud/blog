@@ -17,7 +17,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $commnets = Comment::with('posts','users')->get();
+        return response()->json($commnets);
     }
 
     /**
@@ -40,7 +41,7 @@ class CommentController extends Controller
     {
         $comment = Comment::create([
             'body'=>$request->body,
-            'user_id'=>1,
+            'user_id'=>Auth::id(),
             'post_id'=>$request->post_id
         ]);
         return response()->json([
@@ -81,9 +82,12 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCommentRequest $request, Comment $comment)
+    public function update(Request $request)
     {
-        //
+        $comment = Comment::find($request->id);
+        $comment->body = $request->body;
+        $comment->save();
+        return response()->json($comment);
     }
 
     /**
@@ -92,8 +96,10 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy($id)
     {
-        //
+          $comment =  Comment::find($id);
+          $comment -> delete();
+          return response()->json(['message'=>'deleted']);
     }
 }

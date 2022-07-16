@@ -47,9 +47,9 @@ class CommentController extends Controller
         return response()->json([
             'id'=>$comment->id,
             'body'=>$comment->body,
-            'user'=>$comment->user,
+            'user'=>$comment->users,
+            'userImage'=>$comment->users->user_img,
             'added_at'=>$comment->created_at->diffForHumans(),
-
         ]);
     }
 

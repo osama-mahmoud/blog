@@ -41,12 +41,17 @@
                                                     <div class="view-comments" v-for="(comment,i) in post.comments" :key="i">
                                                         <div class="comments">
                                                             <div class="author-thumb">
-                                                                <img src="images/author-comment1.jpg" alt="">
+                                                                <img :src="'/image/'+comment.userImage" style="width:100px;height:60px;border:1px solid #e7e7e7" alt="">
                                                             </div>
                                                             <div class="comment-body">
                                                                 <h6 v-if="comment.user">{{comment.user.name}}</h6>
                                                                 <span class="date">{{comment.added_at}}</span>
-                                                                <a href="#" class="hidden-xs">Reply</a>
+                                                                <div v-if="isLogged">
+                                                                <div v-if="comment.user.id == user.id">
+                                                                <!-- <a  class="hidden-xs" data-toggle="modal" data-target="#EditModal" @click="editClick(comment)">Edit</a> -->
+                                                                <button style="float: right;margin: 1%;" class="btn btn-danger text-white" data-toggle="modal" data-target="#DeleteModal" @click="deleteComment(comment.id)">Delete</button>
+                                                                <button style="float: right;margin: 1%;" class="btn btn-primary" data-toggle="modal" data-target="#EditModal" @click="editClick(comment)">Edit</button>
+                                                                </div></div><div v-else></div>
                                                                 <p>{{comment.body}}</p>
                                                             </div>
                                                         </div>
@@ -88,7 +93,6 @@
                                                 </form>
                                             </div>
                                         </div>
-
                                             <div v-else class="leave-comment">
                                                 <div class="leave-one">
                                                     <h4>Please Login to comment</h4>
@@ -98,6 +102,51 @@
                         <a class="btn btn-primary" v-if="!isLogged" href="#" data-toggle="modal" data-target="#Login">Login</a>
                         <login></login>
                         <register></register>
+                          <div  class="modal fade" id="EditModal" role="dialog">
+                            <div class="modal-dialog">
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <h4 class="modal-title">Edit Comment</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form role="form" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                          <label for="exampleInputEmail1" style="color: black">Comment</label>
+                                          <textarea required v-model="editComment.body" type="text" class="form-control" placeholder="Enter Title" style="margin-top: 1px;"></textarea>
+                                          <span class="text-danger"></span>
+                                        </div>
+                                        <button  type="submit" class="btn btn-default" @click.prevent="updateComment">Update</button>
+                                      </form>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal" id="CloseUpdateModal">Close</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are You Sure
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="CloseDeleteModal" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" @click.prevent="ConfirmDelete">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
                                         </div>
                                         <!-- <div class="col-md-3 col-md-offset-1">
@@ -145,6 +194,7 @@
             </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
    data(){
      return {
@@ -153,22 +203,68 @@ export default {
        post_id : '',
        comments:[],
        user_id:'',
-       totalComent: ''
+       totalComent: '',
+       currentUserId: '',
+       editComment: [],
+       DeleteId: '',
      }
    },
    created(){
+     this.setUser();
      this.getPost();
-   //  this.updateToken();
+     this.updateToken();
    },
    mounted(){
-      //  console.log(this.$store.state.user);
+        this.setUser();
         this.getPost();
+        this.updateToken();
        },
    methods:{
+     updateToken(){
+       let token =JSON.parse(localStorage.getItem('userToken'));
+       this.$store.commit('setUserToken',token)
+     },
+    editClick(commnet) {
+            this.editComment = commnet;
+        },
+        updateComment(){
+			let formdata = new FormData();
+            formdata.append('_method', 'PATCH');
+            formdata.append('body',this.editComment.body)
+            formdata.append('id',this.editComment.id)
+            axios.post(`/api/comments/${this.editComment.id}`,formdata)
+			.then(res => {
+                document.getElementById('CloseUpdateModal').click();
+                this.$toaster.success('Comment updated successfully.');
+			})
+		},
+            deleteComment(CommentId){
+			this.DeleteId = CommentId;
+       },
+        ConfirmDelete(){
+            var id = this.DeleteId;
+            axios.delete(`/api/comments/${id}`)
+			.then(res => {
+			document.getElementById('CloseDeleteModal').click();
+            this.getPost();
+			this.$toaster.success('Comment deleted successfully.');
+			 })
+			 .catch(err =>{
+				 console.log(err)
+			 })
+		},
+     setUser(){
+               if(this.isLogged){
+                  axios.get('/api/user')
+                        .then(res => {
+                            this.getPost();
+                            this.currentUserId = res.data.user.id;
+                        })
+               }
+     },
      getPost(){
       axios.get('/api/posts/'+this.$route.params.slug)
       .then(res =>{
-        console.log(res)
         this.post = res.data
         this.post_id = this.post.id;
         this.comments = this.post.comments
@@ -182,19 +278,18 @@ export default {
        let {body,post_id} = this;
        axios.post('/api/comments',{body,post_id})
        .then(res => {
-         console.log(res)
          this.comments.unshift(res.data)
          this.totalComent ++
+         this.$toaster.success('Comment added successfully.');
        })
-     },
-     updateToken(){
-       let token =JSON.parse(localStorage.getItem('userToken'));
-       this.$store.commit('setUserToken',token)
      }
 },
 computed:{
+    ...mapState({
+            user: 'user'
+        }),
      isLogged(){
-       return this.$store.getters.isLogged;
+        return this.$store.getters.isLogged;
      }
    }
 }

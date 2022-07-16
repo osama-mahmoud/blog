@@ -8,15 +8,14 @@
         }
         </style>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>AdminPanel</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link
       rel="icon"
       type="image/png"
@@ -28,7 +27,14 @@
     <!-- Custom CSS -->
     <link href="{{ asset('dashboard/dist/css/style.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('dashboard/assets/libs/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet" />
+    {{-- <link href="{{ asset('https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css') }}" rel="stylesheet" /> --}}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
     <div id="app">
@@ -45,18 +51,11 @@
       data-sidebartype="full"
       data-sidebar-position="absolute"
       data-header-position="absolute"
-      data-boxed-layout="full"
-        >
-        {{-- @include('admin.layouts.header') --}}
-        {{-- @include('admin.layouts.sidebar') --}}
+      data-boxed-layout="full">
             <global-admin></global-admin>
-            {{-- @yield('content') --}}
-        {{-- @include('admin.layouts.footer') --}}
-
+      </div>
      </div>
-    </div>
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('dashboard/assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{{ asset('dashboard/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
@@ -80,6 +79,8 @@
     <script src="{{ asset('dashboard/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js') }}"></script>
     <script src="{{ asset('dashboard/dist/js/pages/chart/chart-page-init.js') }}"></script>
     <script src="{{ asset('https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js') }}"></script>
+    {{-- <script src="{{ asset('https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js') }}"></script> --}}
+    <script src="{{ asset('dashboard/assets/libs/bootstrap/dist/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>

@@ -52,9 +52,14 @@ export default {
          }
      },
      methods:{
+        updateToken(){
+       let token =JSON.parse(localStorage.getItem('userToken'));
+       this.$store.commit('setUserToken',token)
+     },
        submitLogin(){
            let {email,password} = this;
            this.$store.dispatch('LoginUser',{email,password})
+           this.updateToken();
        }
      }
 }

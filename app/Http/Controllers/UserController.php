@@ -73,26 +73,16 @@ class UserController extends Controller
 
     public function updateUser(Request $request){
         $user = User::find($request->id);
-        //  $filename = $user->user_img;
-        // if($request->hasFile('user_img')){
-        //    $filename = time().'.'.$request->user_img->getClientOriginalExtension();
-        //    $request->user_img->move(public_path('image'),$filename);
-        // }
-      //  $user->name = $request->name;
-      //  $user->email =  $request->email;
-      //  $user->password =  bcrypt($request->password);
         $user->is_admin = $request->is_admin;
-     //   $user->user_img = $filename != '' ? $filename : $user->user_img;
         $user->save();
         return response()->json($user);
     }
 
     public function deleteUser(Request $request){
         $id = $request->user_ids;
-      //  DB::table('posts')->whereIn('id',$ids)->delete();
         $user =  User::find($id);
-        $user->posts()->delete();
         $user->comments()->delete();
+        $user->posts()->delete();
         $user -> delete();
         return response()->json(['message'=>'deleted']);
      }
@@ -122,5 +112,26 @@ class UserController extends Controller
 
         return response()->json(['token' => $token], 200);
        // return response()->json($user);
+    }
+
+    public function updateUserProfile(Request $request){
+        $this->validate($request, [
+            'email' => 'required|email|unique:users,email,' .$request->id.',id',
+            'name' => 'required|min:3',
+            'password' => 'required',
+        ]);
+        $user = User::find($request->id);
+         $filename = $user->user_img;
+        if($request->hasFile('user_img')){
+           $filename = time().'.'.$request->user_img->getClientOriginalExtension();
+           $request->user_img->move(public_path('image'),$filename);
+        }
+       $user->name = $request->name;
+       $user->email =  $request->email;
+       $user->password =  bcrypt($request->password);
+       $user->user_img = $filename != '' ? $filename : $user->user_img;
+       $user->save();
+       $token = $user->createToken('programingVh')->accessToken;
+        return response()->json($user);
     }
 }

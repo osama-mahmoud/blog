@@ -57,8 +57,9 @@ Vue.use(Vuex)
         }
     },
     actions: {
-        RegisterUser({ commit }, payload) {
-            axios.post('/api/register', payload)
+        async  RegisterUser({ commit }, formData) {
+
+            await   axios.post('/api/register', formData, {'content-type': 'multipart/form-data'})
                 .then(res => {
                   //  console.log(res)
                     commit('setUserToken', res.data.token)
@@ -77,10 +78,12 @@ Vue.use(Vuex)
                     commit('emailError', err.response)
                 })
         },
-        LoginUser({ commit }, payload) {
-            axios.post('/api/login', payload)
+          LoginUser({ commit }, payload) {
+               axios.post('/api/login', payload)
+
                 .then(res => {
-                  //  console.log(res)
+                    // this.state.userToken = null;
+                    // localStorage.removeItem('userToken')
                     commit('setUserToken', res.data.token)
                     axios.get('/api/user')
                         .then(res => {

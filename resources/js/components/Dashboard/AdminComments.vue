@@ -26,9 +26,9 @@
           <td>{{ commnet.users.name }}</td>
           <td>{{ commnet.created_at }}</td>
           <td>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditModal" @click="editClick(commnet)"><i class="mdi mdi-pencil"></i></button>
-            <button type="button" class="btn btn-danger text-white" data-toggle="modal" data-target="#DeleteModal" @click="deleteComment(commnet.id)"><i class="me-2 mdi mdi-delete"></i></button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ViewModal" @click="editClick(commnet)"><i class="me-2 mdi mdi-eye"></i></button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditModal" @click="editClick(commnet)"><i class="mdi mdi-pencil"></i></button>
+            <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#DeleteModal" @click="deleteComment(commnet.id)"><i class="me-2 mdi mdi-delete"></i></button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ViewModal" @click="editClick(commnet)"><i class="me-2 mdi mdi-eye"></i></button>
           </td>
         </tr>
       </tbody>
@@ -51,8 +51,8 @@
                               <!-- Modal content-->
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
                                   <h4 class="modal-title">Edit Comment</h4>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <form role="form" enctype="multipart/form-data">
@@ -61,11 +61,11 @@
                                           <textarea required v-model="editComment.body" type="text" class="form-control" placeholder="Enter Title" style="margin-top: 1px;"></textarea>
                                           <span class="text-danger"></span>
                                         </div>
-                                        <button  type="submit" class="btn btn-default" @click.prevent="updateComment">Update</button>
+                                        <button  type="submit" class="btn btn-primary" @click.prevent="updateComment">Update</button>
                                       </form>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal" id="CloseUpdateModal">Close</button>
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="CloseUpdateModal">Close</button>
                                 </div>
                               </div>
                             </div>
@@ -80,8 +80,8 @@
                               <!-- Modal content-->
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
                                   <h4 class="modal-title">View Comment</h4>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <form role="form" enctype="multipart/form-data">
@@ -100,7 +100,7 @@
                                       </form>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal" id="CloseUpdateModal">Close</button>
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="CloseUpdateModal">Close</button>
                                 </div>
                               </div>
                             </div>
@@ -113,16 +113,13 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+         <h4 class="modal-title">Delete</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>      </div>
       <div class="modal-body">
         Are You Sure
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="CloseDeleteModal" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" id="CloseDeleteModal" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-danger" @click.prevent="ConfirmDelete">Delete</button>
       </div>
     </div>

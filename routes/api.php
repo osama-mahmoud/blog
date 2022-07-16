@@ -22,11 +22,11 @@ Route::get('posts/allposts', 'PostController@allposts');
 Route::apiResource('posts','PostController');
 Route::apiResource('comments','CommentController');
 Route::get('categories/allcategories', 'CategoryController@index');
-//Route::get('categories/{slug}', 'CategoryController@categoryposts');
-//Route::get('searchposts','PostController@searchposts');
+Route::get('categories/{slug}', 'CategoryController@categoryposts');
 Route::get('searchposts/{query}','PostController@searchposts');
 Route::post('login', 'UserController@login');
 Route::post('register', 'UserController@register');
+Route::post('updateuserprofile', 'UserController@updateUserProfile');
 // Settings
 Route::get('allSettings','HomeController@allSettings');
 

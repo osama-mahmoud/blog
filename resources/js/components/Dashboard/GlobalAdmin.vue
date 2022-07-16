@@ -17,14 +17,9 @@
               <!-- Logo text -->
               <span class="logo-text ms-2">
                 <!-- dark Logo text -->
-                <!-- <img
-                  src=""
-                  alt="homepage"
-                  class="light-logo"
-                /> -->
               </span>
               <!-- Logo icon -->
-              <!-- <b class="logo-icon">
+               <!-- <b class="logo-icon">
             <i class="wi wi-sunset"></i>
 
               <img src="image/logo-text.png" alt="homepage" class="light-logo" />
@@ -50,11 +45,7 @@
           <div
             class="navbar-collapse collapse"
             id="navbarSupportedContent"
-            data-navbarbg="skin5"
-          >
-            <!-- ============================================================== -->
-            <!-- toggle and nav items -->
-            <!-- ============================================================== -->
+            data-navbarbg="skin5">
             <ul class="navbar-nav float-start me-auto">
               <li class="nav-item d-none d-lg-block">
                 <a
@@ -65,13 +56,7 @@
                 ></a>
               </li>
             </ul>
-            <!-- ============================================================== -->
-            <!-- Right side toggle and nav items -->
-            <!-- ============================================================== -->
             <ul class="navbar-nav float-end">
-              <!-- ============================================================== -->
-              <!-- Comment -->
-              <!-- ============================================================== -->
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
@@ -92,12 +77,6 @@
                   </li>
                 </ul>
               </li>
-              <!-- ============================================================== -->
-              <!-- End Comment -->
-              <!-- ============================================================== -->
-              <!-- ============================================================== -->
-              <!-- Messages -->
-              <!-- ============================================================== -->
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle waves-effect waves-dark"
@@ -206,15 +185,13 @@
                   </ul>
                 </ul>
               </li>
-              <!-- ============================================================== -->
-              <!-- End Messages -->
-              <!-- ============================================================== -->
-
-              <!-- ============================================================== -->
-              <!-- User profile and search -->
-              <!-- ============================================================== -->
               <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+               <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+                 href="#"
+                 id="navbarDropdown"
+                 role="button"
+                 data-bs-toggle="dropdown"
+                 aria-expanded="false">
                 <img v-if="isLogged && this.$store.state.user" :src="'/image/'+this.$store.state.user.user_img" class="rounded-circle" width="31" alt="user">
                 </a>
                 <ul
@@ -236,9 +213,8 @@
                     Setting</a
                   >
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="javascript:void(0)"
-                    ><i class="fa fa-power-off me-1 ms-1"></i> Logout</a
-                  >
+                  <a class="dropdown-item" @click.prevent="logout" href="#"
+                    ><i class="fa fa-power-off me-1 ms-1"></i> Logout</a>
                   <div class="dropdown-divider"></div>
                   <div class="ps-4 p-10">
                     <a
@@ -249,26 +225,10 @@
                   </div>
                 </ul>
               </li>
-              <!-- ============================================================== -->
-              <!-- User profile and search -->
-              <!-- ============================================================== -->
             </ul>
           </div>
         </nav>
       </header>
-      <!-- ============================================================== -->
-      <!-- End Topbar header -->
-      <!-- ============================================================== -->
-
-
-
-
-
-
-
- <!-- ============================================================== -->
-      <!-- Left Sidebar - style you can find in sidebar.scss  -->
-      <!-- ============================================================== -->
       <aside class="left-sidebar" data-sidebarbg="skin5">
         <!-- Sidebar scroll-->
         <div class="scroll-sidebar">
@@ -317,30 +277,12 @@
         </div>
         <!-- End Sidebar scroll-->
       </aside>
-      <!-- ============================================================== -->
-      <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-      <!-- ============================================================== -->
-
-
-
-
-
-
 <div class="page-wrapper">
-
 <router-view></router-view>
-
-</div>
-
-
-        <!-- footer -->
-        <!-- ============================================================== -->
         <footer class="footer text-center">
             Developed by Osama Mahmoud
         </footer>
-          <!-- ============================================================== -->
-          <!-- End footer -->
-          <!-- ============================================================== -->
+</div>
 </div>
 </template>
 <script>
@@ -375,7 +317,13 @@ export default {
                }
      },
      logout(){
-         this.$store.commit('logout')
+        localStorage.removeItem('userToken');
+        // this.$router.push({
+        //     path: '/',
+        // }).catch(()=>{});
+       // this.$router.go('/')
+        window.location.href = '/';
+        // this.$store.commit('logout')
      },
   },
   computed:{

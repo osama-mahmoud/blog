@@ -9,7 +9,7 @@
                         <a v-if="!isLogged" href="#" data-toggle="modal" data-target="#Register">Register</a>
                         <a v-if="!isLogged" href="#" data-toggle="modal" data-target="#Login">Login</a>
                         <a v-if="isLogged" @click.stop="logout" href="#">Logout</a>
-                        <span v-if="isLogged && this.$store.state.user" class="addNew">Welcome {{this.$store.state.user.name}}</span>
+                        <span v-if="isLogged && this.$store.state.user" class="addNew"><router-link :to="'/Profile'">Welcome {{this.$store.state.user.name}}</router-link></span>
                         <login></login>
                         <register></register>
                     </div>
@@ -155,7 +155,7 @@ export default {
             query: {
             arrgu:this.page,
           }
-        })
+        }).catch(()=>{});
         },
      updateToken(){
        let token =JSON.parse(localStorage.getItem('userToken'));

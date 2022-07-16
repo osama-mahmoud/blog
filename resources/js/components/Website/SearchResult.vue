@@ -4,13 +4,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="heading-section">
-                                <h2>Posts</h2>
+                                <h2>Search</h2>
                                 <img src="images/under-heading.png" alt="" >
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4 col-sm-6" v-for="SearchResultForm in page.data" :key="SearchResultForm.id">
+                    <div class="row" v-if="page.data">
+                        <div class="col-md-4 col-sm-6"  v-for="SearchResultForm in page.data" :key="SearchResultForm.id">
                             <div class="blog-post">
                                 <div class="blog-thumb">
                                     <img :src="'/image/'+SearchResultForm.image" alt="">

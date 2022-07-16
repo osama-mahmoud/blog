@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
+use Auth;
 
 class PostController extends Controller
 {
@@ -67,7 +68,8 @@ class PostController extends Controller
                 return [
                     'id'=>$comment->id,
                     'body'=>$comment->body,
-                    'user'=>$comment->user,
+                    'user'=>$comment->users,
+                    'userImage'=>$comment->users->user_img,
                     'added_at'=>$comment->created_at->diffForHumans()
                 ];
             })

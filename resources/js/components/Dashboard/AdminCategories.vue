@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
             <div class="col-12">
-                <button type="button" class="btn btn-success btn-lg text-white" data-toggle="modal" data-target="#AddModal" @click="ClearErrors()">Add</button>
+                <button type="button" class="btn btn-success btn-lg text-white" data-bs-toggle="modal" data-bs-target="#AddModal" @click="ClearErrors()">Add</button>
                 <br><br>
               <div class="card">
                 <div class="card-body">
@@ -26,9 +26,9 @@
           <td>{{ category.slug }}</td>
           <td>{{ category.created_at }}</td>
           <td>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditModal" @click="editClick(category)"><i class="mdi mdi-pencil"></i></button>
-            <button type="button" class="btn btn-danger text-white" data-toggle="modal" data-target="#DeleteModal" @click="deletePost(category.id)"><i class="me-2 mdi mdi-delete"></i></button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ViewModal" @click="editClick(category)"><i class="me-2 mdi mdi-eye"></i></button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditModal" @click="editClick(category)"><i class="mdi mdi-pencil"></i></button>
+            <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#DeleteModal" @click="deletePost(category.id)"><i class="me-2 mdi mdi-delete"></i></button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ViewModal" @click="editClick(category)"><i class="me-2 mdi mdi-eye"></i></button>
           </td>
         </tr>
       </tbody>
@@ -50,8 +50,8 @@
                               <!-- Modal content-->
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
                                   <h4 class="modal-title">Add Category</h4>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <form role="form" enctype="multipart/form-data">
@@ -65,11 +65,11 @@
                                           <input v-model="slug" type="text" class="form-control" placeholder="Enter Slug" style="margin-top: 1px;">
                                           <span class="text-danger" v-if="Errors.slug">{{ Errors.slug[0] }}</span>
                                         </div>
-                                        <button type="submit" class="btn btn-default" @click.prevent="addCategory">Submit</button>
+                                        <button type="submit" class="btn btn-primary" @click.prevent="addCategory">Submit</button>
                                       </form>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal" id="CloseLoginModal">Close</button>
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="CloseLoginModal">Close</button>
                                 </div>
                               </div>
                             </div>
@@ -83,8 +83,8 @@
                               <!-- Modal content-->
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
                                   <h4 class="modal-title">Edit Category</h4>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <form role="form" enctype="multipart/form-data">
@@ -98,11 +98,11 @@
                                           <input v-model="editCategory.slug" type="text" class="form-control" placeholder="Enter Slug" style="margin-top: 1px;">
                                           <span class="text-danger"></span>
                                         </div>
-                                        <button  type="submit" class="btn btn-default" @click.prevent="updateCategory">Update</button>
+                                        <button  type="submit" class="btn btn-primary" @click.prevent="updateCategory">Update</button>
                                       </form>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal" id="CloseUpdateModal">Close</button>
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="CloseUpdateModal">Close</button>
                                 </div>
                               </div>
                             </div>
@@ -117,8 +117,8 @@
                               <!-- Modal content-->
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
                                   <h4 class="modal-title">View Category</h4>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <form role="form" enctype="multipart/form-data">
@@ -133,7 +133,7 @@
                                       </form>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal" id="CloseUpdateModal">Close</button>
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="CloseUpdateModal">Close</button>
                                 </div>
                               </div>
                             </div>
@@ -146,16 +146,13 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+         <h4 class="modal-title">Delete</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>      </div>
       <div class="modal-body">
         Are You Sure
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="CloseDeleteModal" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" id="CloseDeleteModal" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-danger" @click.prevent="ConfirmDelete">Delete</button>
       </div>
     </div>

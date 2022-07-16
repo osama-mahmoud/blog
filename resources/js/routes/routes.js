@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import store from '../store.js'
 Vue.use(VueRouter);
 
-
+import GlobalHome from '../components/Website/GlobalHome.vue'
                 // Website //
 import Home from '../components/Website/Home.vue'
 import PostDetails from '../components/Website/PostDetails.vue';
@@ -11,6 +11,7 @@ import Categories from '../components/Website/Categories.vue';
 import CategoryPosts from '../components/Website/CategoryPosts.vue';
 import AllPosts from '../components/Website/AllPosts.vue';
 import SearchResult from '../components/Website/SearchResult.vue';
+import UserProfile from '../components/Website/UserProfile.vue';
                // Admin //
 import AdminUsers from '../components/Dashboard/AdminUsers.vue';
 import AdminHome from '../components/Dashboard/AdminHome.vue';
@@ -24,6 +25,21 @@ import AdminComments from '../components/Dashboard/AdminComments.vue';
 const routes = [
                         // Website Routes  //
     { path: '/', component: Home, name: 'Home' , meta: { allUsers: true }},
+
+
+    // {
+    //     path: '/',
+    //     name: 'Home',
+    //     components: {
+    //       default: GlobalHome,
+    //       father: Home,
+    //      // b: Baz
+    //     }
+    //   },
+
+
+
+    { path: '/Profile', component: UserProfile, name: 'UserProfile' , meta: { allUsers: true }},
     { path: '/posts', component: AllPosts, name: 'AllPosts' , meta: { allUsers: true }},
     { path: '/SearchResult', component: SearchResult , props: true , name: 'SearchResult' , meta: { allUsers: true }},
     { path: '/post/:slug', component: PostDetails, name: 'PostDetails' , meta: { allUsers: true }},
@@ -63,7 +79,7 @@ router.beforeEach((to, from, next) => {
      if (to.matched.some(record => record.meta.allUsers)) {
         next()
      }
-      let web = ["AdminHome", "AdminPosts", "AdminCategories", "AdminUsers","AdminSettings"];
+      let web = ["AdminHome", "AdminPosts", "AdminCategories", "AdminUsers","AdminSettings","AdminComments"];
     if(web.includes(to.name) && !store.getters.isLogged){
         router.go(-1)
     }

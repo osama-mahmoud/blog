@@ -1,5 +1,4 @@
 <template>
-
                           <div class="modal fade Login" id="Register" role="dialog">
                             <div class="modal-dialog">
                               <!-- Modal content-->
@@ -9,7 +8,7 @@
                                   <h4 class="modal-title" style="color: black">Registration form</h4>
                                 </div>
                                 <div class="modal-body">
-                                        <form role="form" nonvalidate>
+                                        <form role="form" enctype="multipart/form-data">
                                               <div class="form-group">
                                                 <label for="exampleInputEmail1" style="color: black">Name</label>
                                                 <input type="text" class="form-control" placeholder="Enter Last Name" style="margin-top: 1px;" v-model="name">
@@ -26,6 +25,11 @@
                                               <input type="password" class="form-control Password" placeholder="Password" style="margin-top: 1px;" v-model="password" autocomplete="new-password">
                                               <span class="text-danger" v-show="PasswordError">Password to short</span>
                                             </div>
+                                            <div class="form-group">
+                                          <label for="exampleInputPassword1" style="color: black">Image</label>
+                                          <input required @change="onImageChanged" type="file" class="form-control" placeholder="Image" style="margin-top: 1px;">
+                                          <!-- <span class="text-danger" v-if="Errors.image">{{ Errors.image[0] }}</span> -->
+                                        </div>
                                             <button @click.prevent="submitRegister" :disabled="!isValidForm" type="submit" class="btn btn-default">Submit</button>
                                           </form>
                                 </div>
@@ -44,6 +48,7 @@ export default {
             email:'',
             password:'',
             is_admin:0,
+            user_img : '',
         }
        },
        computed:{
@@ -61,9 +66,18 @@ export default {
          }
      },
      methods:{
+        onImageChanged(event){
+			this.user_img  = event.target.files[0]
+		},
        submitRegister(){
-            let  {name,email,password,is_admin} = this;
-            this.$store.dispatch('RegisterUser',{name,email,password,is_admin})
+           // let  {name,email,password,is_admin,user_img} = this;
+            var formData = new FormData();
+            formData.append("name",this.name);
+            formData.append("email",this.email);
+            formData.append("password",this.password);
+            formData.append("is_admin",this.is_admin);
+            formData.append("user_img",this.user_img);
+            this.$store.dispatch('RegisterUser',formData)
        },
        ClearInput(){
             this.name='',

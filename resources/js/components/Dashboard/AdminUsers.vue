@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
             <div class="col-12">
-                <button type="button" class="btn btn-success btn-lg text-white" data-toggle="modal" data-target="#AddModal" @click="ClearErrors()">Add</button>
+                <button type="button" class="btn btn-success btn-lg text-white" data-bs-toggle="modal" data-bs-target="#AddModal" @click="ClearErrors()">Add</button>
                 <br><br>
               <div class="card">
                 <div class="card-body">
@@ -28,9 +28,9 @@
             <td><img :src="'/image/'+user.user_img" style="width:100px;height:60px;border:1px solid #e7e7e7" alt=""></td>
           <td>{{ user.created_at }}</td>
           <td>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditModal" @click="editClick(user)"><i class="mdi mdi-pencil"></i></button>
-            <button type="button" class="btn btn-danger text-white" data-toggle="modal" data-target="#DeleteModal" @click="deleteUser(user.id)"><i class="me-2 mdi mdi-delete"></i></button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ViewModal" @click="editClick(user)"><i class="me-2 mdi mdi-eye"></i></button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditModal" @click="editClick(user)"><i class="mdi mdi-pencil"></i></button>
+            <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#DeleteModal" @click="deleteUser(user.id)"><i class="me-2 mdi mdi-delete"></i></button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ViewModal" @click="editClick(user)"><i class="me-2 mdi mdi-eye"></i></button>
           </td>
         </tr>
       </tbody>
@@ -52,8 +52,8 @@
                               <!-- Modal content-->
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
                                   <h4 class="modal-title">Add User</h4>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <form role="form" enctype="multipart/form-data">
@@ -86,11 +86,11 @@
                                           <input required @change="onImageChanged" type="file" class="form-control" placeholder="Image" style="margin-top: 1px;">
                                           <!-- <span class="text-danger" v-if="Errors.image">{{ Errors.image[0] }}</span> -->
                                         </div>
-                                        <button type="submit" class="btn btn-default" @click.prevent="addUser">Submit</button>
+                                        <button type="submit" class="btn btn-primary" @click.prevent="addUser">Submit</button>
                                       </form>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal" id="CloseLoginModal">Close</button>
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="CloseLoginModal">Close</button>
                                 </div>
                               </div>
                             </div>
@@ -104,8 +104,8 @@
                               <!-- Modal content-->
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                  <h4 class="modal-title">Edit User</h4>
+                                    <h4 class="modal-title">Edit User</h4>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <form role="form" enctype="multipart/form-data">
@@ -138,11 +138,11 @@
                                           <input required @change="onImageChangedUpdate" type="file" class="form-control" placeholder="Password" style="margin-top: 1px;">
                                           <span class="text-danger"></span>
                                         </div> -->
-                                        <button  type="submit" class="btn btn-default" @click.prevent="updateUser">Update</button>
+                                        <button  type="submit" class="btn btn-primary" @click.prevent="updateUser">Update</button>
                                       </form>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal" id="CloseUpdateModal">Close</button>
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="CloseUpdateModal">Close</button>
                                 </div>
                               </div>
                             </div>
@@ -156,8 +156,8 @@
                             <div class="modal-dialog">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
                                   <h4 class="modal-title">View User</h4>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <form role="form" enctype="multipart/form-data">
@@ -181,7 +181,7 @@
                                       </form>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal" id="CloseUpdateModal">Close</button>
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="CloseUpdateModal">Close</button>
                                 </div>
                               </div>
                             </div>
@@ -194,16 +194,14 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h4 class="modal-title">Delete</h4>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         Are You Sure
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="CloseDeleteModal" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" id="CloseDeleteModal" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-danger" @click.prevent="ConfirmDelete">Delete</button>
       </div>
     </div>
@@ -246,20 +244,15 @@ export default {
             .then(res => {
              this.users = res.data;
              if(res.data){
-              //  $("#datatable").DataTable();
              }
-            // console.log(res.data)
-
               setTimeout(() => $("#datatable").DataTable(), 100);
             })
             .then(err => console.log(err))
         },
         onImageChanged(event){
-			//console.log(event.target.files[0])
 			this.user_img  = event.target.files[0]
 		},
         onImageChangedUpdate(event){
-			//console.log(event.target.files[0])
 			this.editUser.user_img  = event.target.files[0]
 		},
         change: function(e){

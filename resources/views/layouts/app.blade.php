@@ -31,9 +31,6 @@ http://www.templatemo.com/free-website-templates/417-grill
         <![endif]-->
     <div id="app">
         <global-home></global-home>
-          {{-- @include('layouts.header') --}}
-            {{-- @yield('content') --}}
-          {{-- @include('layouts.footer') --}}
     </div>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('website/js/vendor/jquery-1.11.0.min.js') }}"></script>
